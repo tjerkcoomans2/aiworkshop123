@@ -1,11 +1,12 @@
 /*------------------------------------------------------------------------
   File        : ItemDataset.i
   Purpose     : Dataset definition for Item entity
-  Syntax      : 
-  Description : 
-  Author(s)   : 
+  Syntax      : {business/ItemDataset.i}
+  Description : Defines temp-table ttItem (before-table bttItem) and dataset
+                dsItem, mirroring the sports2000 Item table
+  Author(s)   : Tjerk Coomans
   Created     : Thu Oct 01 16:30:00 CEST 2026
-  Notes       : 
+  Notes       : Included by ItemEntity and by UI code that uses the entity
 ----------------------------------------------------------------------*/
 
 /* Define temp-table for Item */

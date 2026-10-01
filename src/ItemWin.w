@@ -4,9 +4,10 @@
 &ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _DEFINITIONS C-Win 
 /*------------------------------------------------------------------------
 
-  File: 
+  File: ItemWin.w
 
-  Description: 
+  Description: Window to look up an item and change its price, using
+               the ItemEntity business entity
 
   Input Parameters:
       <none>
@@ -14,9 +15,9 @@
   Output Parameters:
       <none>
 
-  Author: 
+  Author: Tjerk Coomans
 
-  Created: 
+  Created: Thu Oct 01 16:10:05 CEST 2026
 
 ------------------------------------------------------------------------*/
 /*          This .W file was created with the Progress AppBuilder.      */
