@@ -1,0 +1,329 @@
+sports2000 schema summary
+=========================
+
+Summary of dump/sports2000.df (tables, fields with data type, indexes).
+This is not a loadable .df file; formats, labels, validation expressions and
+triggers are omitted.
+
+Sequences
+---------
+NextCustNum, NextInvNum, NextOrdNum, NextItemNum, NextRefNum, NextVisitor,
+NextSupplNum, NextLocalDefNum, NextWareNum, NextBinNum, NextPONum, NextEmpNum,
+NextInvTransNum
+
+Tables
+------
+
+TABLE Benefits
+  EmpNum integer
+  HealthCare character
+  LifeInsurance integer
+  Pension401K integer
+  StockPurchase integer
+  MedicalSpending integer
+  DependentCare integer
+  IDX EmpNo UNIQUE PRIMARY [EmpNum]
+
+TABLE BillTo
+  CustNum integer
+  BillToID integer
+  Name character
+  Address character
+  Address2 character
+  City character
+  State character
+  PostalCode character
+  Contact character
+  Phone character
+  IDX custnumbillto UNIQUE PRIMARY [CustNum] [BillToID]
+
+TABLE Bin
+  WarehouseNum integer
+  Itemnum integer
+  Qty integer
+  BinNum integer
+  BinName character
+  IDX BinNum UNIQUE PRIMARY [BinNum]
+  IDX ItemNum [Itemnum]
+  IDX WarehouseNumItemNum [WarehouseNum] [Itemnum]
+
+TABLE Customer
+  CustNum integer
+  Name character
+  Address character
+  Address2 character
+  City character
+  State character
+  Country character
+  Phone character
+  Contact character
+  SalesRep character
+  Comments character
+  CreditLimit decimal
+  Balance decimal
+  Terms character
+  Discount integer
+  PostalCode character
+  Fax character
+  EmailAddress character
+  IDX CustNum UNIQUE PRIMARY [CustNum]
+  IDX Comments [Comments]
+  IDX CountryPost [Country] [PostalCode]
+  IDX Name [Name]
+  IDX SalesRep [SalesRep]
+
+TABLE Department
+  DeptCode character
+  DeptName character
+  IDX DeptCode UNIQUE PRIMARY [DeptCode]
+
+TABLE Employee
+  LastName character
+  FirstName character
+  Address character
+  Address2 character
+  City character
+  State character
+  PostalCode character
+  DeptCode character
+  Position character
+  HomePhone character
+  WorkPhone character
+  VacationDaysLeft integer
+  SickDaysLeft integer
+  EmpNum integer
+  StartDate date
+  Birthdate date
+  IDX EmpNo UNIQUE PRIMARY [EmpNum]
+  IDX DeptCode [DeptCode]
+  IDX Name UNIQUE [LastName] [FirstName]
+
+TABLE Family
+  RelativeName character
+  Relation character
+  Birthdate date
+  BenefitDate date
+  CoveredOnBenefits logical
+  EmpNum integer
+  IDX EmpNoRelativeName UNIQUE PRIMARY [EmpNum] [RelativeName]
+
+TABLE Feedback
+  Contact character
+  Company character
+  EmailAddress character
+  Phone character
+  Fax character
+  Comments character
+  Department character
+  Rating integer
+  IDX Department PRIMARY [Department]
+  IDX Comments [Comments]
+  IDX Company [Company]
+  IDX Contact [Contact]
+  IDX Rating [Rating]
+
+TABLE InventoryTrans
+  InvTransNum integer
+  WarehouseNum integer
+  BinNum integer
+  Qty integer
+  Itemnum integer
+  TransDate date
+  InvType character
+  PONum integer
+  Ordernum integer
+  Transtime character
+
+TABLE Invoice
+  Invoicenum integer
+  CustNum integer
+  InvoiceDate date
+  Amount decimal
+  TotalPaid decimal
+  Adjustment decimal
+  OrderNum integer
+  ShipCharge decimal
+  IDX InvoiceNum UNIQUE PRIMARY [Invoicenum]
+  IDX CustNum [CustNum]
+  IDX InvoiceDate [InvoiceDate]
+  IDX OrderNum [OrderNum]
+
+TABLE Item
+  Itemnum integer
+  ItemName character
+  CatPage integer
+  Price decimal
+  CatDescription character
+  Onhand integer
+  Allocated integer
+  ReOrder integer
+  OnOrder integer
+  Category1 character
+  Category2 character
+  Special character
+  Weight decimal
+  Minqty integer
+  IDX ItemNum UNIQUE PRIMARY [Itemnum]
+  IDX CatDescription [CatDescription]
+  IDX Category2ItemName [Category2] [ItemName]
+  IDX CategoryItemName [Category1] [ItemName]
+  IDX ItemName [ItemName]
+
+TABLE LocalDefault
+  Country character
+  Region1Label character
+  Region2Label character
+  PostalLabel character
+  PostalFormat character
+  TelFormat character
+  DateFormat character
+  CurrencySymbol character
+  LocalDefNum integer
+  IDX localdefnum UNIQUE PRIMARY [LocalDefNum]
+
+TABLE Order
+  Ordernum integer
+  CustNum integer
+  OrderDate date
+  ShipDate date
+  PromiseDate date
+  Carrier character
+  Instructions character
+  PO character
+  Terms character
+  SalesRep character
+  BillToID integer
+  ShipToID integer
+  OrderStatus character
+  WarehouseNum integer
+  Creditcard character
+  IDX OrderNum UNIQUE PRIMARY [Ordernum]
+  IDX CustOrder UNIQUE [CustNum] [Ordernum]
+  IDX OrderDate [OrderDate]
+  IDX OrderStatus [OrderStatus]
+  IDX SalesRep [SalesRep]
+
+TABLE OrderLine
+  Ordernum integer
+  Linenum integer
+  Itemnum integer
+  Price decimal
+  Qty integer
+  Discount integer
+  ExtendedPrice decimal
+  OrderLineStatus character
+  IDX orderline UNIQUE PRIMARY [Ordernum] [Linenum]
+  IDX itemnum [Itemnum]
+  IDX OrderLineStatus [OrderLineStatus]
+
+TABLE POLine
+  Linenum integer
+  Itemnum integer
+  Price decimal
+  Qty integer
+  Discount integer
+  ExtendedPrice decimal
+  PONum integer
+  POLineStatus character
+  IDX PONumLinenum UNIQUE PRIMARY [PONum] [Linenum]
+
+TABLE PurchaseOrder
+  PONum integer
+  DateEntered date
+  SupplierIDNum integer
+  ReceiveDate date
+  POStatus character
+  IDX PONum UNIQUE PRIMARY [PONum]
+
+TABLE RefCall
+  CallNum character
+  CustNum integer
+  CallDate date
+  SalesRep character
+  Parent character
+  Txt character
+  IDX CallNum UNIQUE PRIMARY [CallNum]
+  IDX CustNum UNIQUE [CustNum] [CallNum]
+  IDX Sibling UNIQUE [Parent] [CallNum]
+  IDX Txt [Txt]
+
+TABLE Salesrep
+  RepName character
+  Region character
+  SalesRep character
+  MonthQuota integer
+  IDX SalesRep UNIQUE PRIMARY [SalesRep]
+
+TABLE ShipTo
+  CustNum integer
+  ShipToID integer
+  Contact character
+  Address character
+  Address2 character
+  City character
+  State character
+  PostalCode character
+  Phone character
+  Comments character
+  Name character
+  IDX custnumshipto UNIQUE PRIMARY [CustNum] [ShipToID]
+
+TABLE State
+  State character
+  StateName character
+  Region character
+  IDX State UNIQUE PRIMARY [State]
+
+TABLE Supplier
+  SupplierIDNum integer
+  Name character
+  Address character
+  Address2 character
+  City character
+  State character
+  Country character
+  Phone character
+  Password character
+  LoginDate date
+  Comments character
+  ShipAmount integer
+  PostalCode character
+  Discount integer
+  IDX SupplierID UNIQUE PRIMARY [SupplierIDNum]
+
+TABLE SupplierItemXref
+  SupplierIDNum integer
+  Itemnum integer
+  IDX SupplieridItemNum UNIQUE PRIMARY [SupplierIDNum] [Itemnum]
+  IDX ItemNumSupplierID UNIQUE [Itemnum] [SupplierIDNum]
+
+TABLE TimeSheet
+  EmpNum integer
+  DayRecorded date
+  TypeRecorded character
+  AMTimeIn character
+  AMTimeOut character
+  PMTimeIn character
+  PMTimeOut character
+  RegularHours decimal
+  OvertimeHours decimal
+  IDX EmpNoDayRecorded UNIQUE PRIMARY [EmpNum] [DayRecorded]
+
+TABLE Vacation
+  EmpNum integer
+  StartDate date
+  EndDate date
+  IDX EmpNoStartDate UNIQUE PRIMARY [EmpNum] [StartDate]
+
+TABLE Warehouse
+  WarehouseNum integer
+  WarehouseName character
+  Country character
+  Address character
+  Address2 character
+  City character
+  State character
+  PostalCode character
+  Phone character
+  IDX warehousenum UNIQUE PRIMARY [WarehouseNum]
+  IDX warehousename [WarehouseName]
